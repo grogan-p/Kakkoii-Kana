@@ -12,8 +12,9 @@ app.secret_key = os.getenv("SECRET_KEY")
 @app.route('/index', methods=["GET", "POST"])
 def index() -> str | Response:
     """Main function"""
-    questions = {"すし" : "sushi", "はい" : "hai", "にほん" : "nihon"}
+    questions = {"すし" : "sushi", "はい" : "hai", "にほん" : "nihon", "わたし" : "watashi", "あなた" : "anata", "ごはん": "gohan"}
     keys = list(questions.keys())
+    correct: bool = False
 
     if "current_index" not in session:
         session["current_index"] = 0
@@ -25,15 +26,13 @@ def index() -> str | Response:
     if request.method == "POST":
         response = request.form.get("response")
         if response:
-            if response.lower() == answer:
-                print(f"Correct! -- question #{current_index + 1}")
-            else:
-                print(f"Incorrect -- question #{current_index + 1}")
+            correct = response.lower() == answer
             session["current_index"] = (current_index + 1) % len(questions)
         new_kana = keys[session["current_index"]]
-        return jsonify(word=new_kana)
+        return jsonify(word=new_kana, correct=correct, correct_answer=answer)
 
-    return render_template('index.html', word=kana, current_index=session["current_index"])
+    if request.method == "GET":
+        return render_template('index.html', word=kana, current_index=session["current_index"])
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=7000)

@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kakkoii Kana</title>
     <link href="{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+    <style>
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
 </head>
 
 <body>
@@ -14,6 +18,7 @@
         <input type="text" name="response" id="response" placeholder="Romaji" />
         <button type="submit">Submit</button>
     </form>
+    <p><span id="feedback"></span></p>
 
     <script>
         document.getElementById('quizForm').addEventListener('submit', async (e) => {
@@ -26,6 +31,16 @@
             });
             const data = await res.json();
             document.querySelector('h1').textContent = data.word;
+
+            const feedback = document.getElementById('feedback');
+            if (data.correct === true) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'correct';
+            } else if (data.correct === false) {
+                feedback.textContent = `Incorrect — answer was "${data.correct_answer}"`;
+                feedback.className = 'incorrect';
+            }
+
             document.getElementById('response').value = '';
         });
     </script>
