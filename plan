@@ -3,7 +3,7 @@
 3. Check if inputted text matches a provided word - Done
 4. Display hiragana - Done
 5. Don't reload paga - Done
-6. Display correctness
+6. Display correctness - Done
 7. Randomly generate hiragana and check if matches romaji 
 (maybe use JMDict https://www.edrdg.org/jmdict/j_jmdict.html or JishoAPI https://github.com/pedroallenrevez/jisho-api/ which needs online)
 8. Send generated words to index
