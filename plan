@@ -4,11 +4,9 @@
 4. Display hiragana - Done
 5. Don't reload paga - Done
 6. Display correctness - Done
-7. Randomly generate hiragana and check if matches romaji 
-(maybe use JMDict https://www.edrdg.org/jmdict/j_jmdict.html or JishoAPI https://github.com/pedroallenrevez/jisho-api/ which needs online)
-8. Send generated words to index
-9. Add trackers for correct and incorrect and display on screen
-10. Provide translations and kanji if available for the words
-11. Add katakana
-12. Tracker for total number of words
-13. css
+7. Randomly generate hiragana and check if matches romaji - Done 
+8. Add trackers for correct and incorrect count and display on screen - Done
+9. Provide translations and kanji if available for the words - Done
+10. Add katakana
+11. Tracker for total number of words, and an index of learned words
+12. css

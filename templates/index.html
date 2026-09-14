@@ -13,14 +13,22 @@
 </head>
 
 <body>
-    <h1> {{ word }}</h1>
+    <h1> {{ word }} </h1>
     <form id="quizForm" method="post">
         <input type="text" name="response" id="response" placeholder="Romaji" />
         <button type="submit">Submit</button>
     </form>
     <p><span id="feedback"></span></p>
+    <p id="reveal"></p>
+    <p id="score">
+        Correct: <span id="correctCount" class="correct">0</span> &mdash;
+        Incorrect: <span id="incorrectCount" class="incorrect">0</span>
+    </p>
 
     <script>
+        let correctCount = 0;
+        let incorrectCount = 0;
+
         document.getElementById('quizForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const response = document.getElementById('response').value;
@@ -36,9 +44,25 @@
             if (data.correct === true) {
                 feedback.textContent = 'Correct!';
                 feedback.className = 'correct';
+                correctCount++;
             } else if (data.correct === false) {
                 feedback.textContent = `Incorrect — answer was "${data.correct_answer}"`;
                 feedback.className = 'incorrect';
+                incorrectCount++;
+            }
+
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+
+            // Reveal what the word actually was, once it has been answered.
+            const reveal = document.getElementById('reveal');
+            if (data.correct === null || data.correct === undefined) {
+                reveal.textContent = '';
+            } else {
+                const parts = [];
+                if (data.kanji) parts.push(data.kanji);
+                if (data.meaning && data.meaning.length) parts.push(data.meaning.join(', '));
+                reveal.textContent = parts.join(' — ');
             }
 
             document.getElementById('response').value = '';
